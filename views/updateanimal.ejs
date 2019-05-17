@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="jquery.js"></script>
+        <script type="text/javascript"></script>  
+    </head>
+    <body>
+        <h1>successfully updated</h1>
+        <ul>
+            <li>
+                NAME:&nbsp;&nbsp; <%= animals.name %>.
+                <br><br>
+                SPECIES:&nbsp;&nbsp; <%= animals.species %>.
+                <br><br>
+                BREED:&nbsp;&nbsp; <%= animals.breed %>.
+                <br><br>
+                GENDER:&nbsp;&nbsp; <%= animals.gender %>.
+                <br><br>
+                AGE:&nbsp;&nbsp; <%= animals.age %>.
+                <br><br>
+                TRAITS:  <%= animals.traits[0] %>,&nbsp;&nbsp;<%= animals.traits[1] %>
+                <br><br>
+                <a href="/formaddanimal">Back</a>
+            </li>
+        </ul>
+    </body>
+
+</html>

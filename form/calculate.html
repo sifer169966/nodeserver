@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/jquery.js"></script>
+       <script type="text/javascript">
+       $(document).ready(()=>{
+           alert("document.ready");
+        });
+        </script>
+    </head>
+
+<body>
+        <h1>Calculate Page</h1>
+<form>
+
+<br>
+    ID#1:&nbsp;
+<input name="id[0]">&nbsp;&nbsp;qty: <input type="number" name="qty[0]" min="0" max="10" style="width:28px;" placeholder="0"> <br>
+                                                       
+<br>                                                               
+ID#2:&nbsp;
+<input name="id[1]">&nbsp;&nbsp;qty: <input type="number" name="qty[1]" min="0" max="10" style="width:28px;" placeholder="0">
+
+</form>
+
+
+<ul>
+    <div id="result"></div>
+</ul>
+
+<script>
+
+$("input").on("change input textInput", () =>{
+
+
+var id0 = $("input[name='id[0]']").val();
+var id1 = $("input[name='id[1]']").val();
+var qty0 = $("input[name='qty[0]']").val();
+var qty1 = $("input[name='qty[1]']").val();
+
+var query = '?';
+
+if(id0 != "") query += 'id[0]=' + id0 + '&';
+else query += 'id[0]=' + '' + '&';
+if(id1 !="") query += 'id[1]=' + id1 + '&';
+else query += 'id[1]=' + '' + '&';
+
+if(qty0 !="") query += 'qty[0]=' + qty0 + '&';
+else query += 'qty[0]=' + '' + '&';
+if(qty1 !="") query += 'qty[1]=' + qty1 + '&';
+else query += 'qty[1]=' + '' + '&';
+
+var url = 'http://localhost:3000/calculatePrice/' + query;
+console.log(url)
+$.getJSON(url,(items, status) =>{
+    var result = $("#result");
+    result.html('');
+    if(items.items != "" || items.totalPrice != 0){
+        items.items.forEach((item) => {
+            result.append('<li>' + 'ID:' + ' ' + item.item + '<br>')
+                result.append('Qty:' + ' ' + item.qty + '<br>')
+                result.append('Subtotal:' + ' ' + item.subtotal + '</li>' + '<br>' + '<br>') 
+            });
+            result.append( '<li>' + 'TotalPrice = ' + items.totalPrice + '</li>')
+        }
+        else result.append('<li>' + 'Notfound' + '</li>')
+    })
+});
+
+
+
+
+</script>
+
+</body>
+
+</html>

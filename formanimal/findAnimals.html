@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="jquery.js"></script>
+        <script type="text/javascript"></script>  
+    </head>
+
+    <body>
+
+<h1>Find Animals Page</h1><br>
+
+
+<form>
+
+Species:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                            animalsYoungerThan<br>
+<input name="species" onchange="return Onchange();">&nbsp;&nbsp;&nbsp;&nbsp;<input name="age" onchange="return agelessthan();"><br>
+
+Trait:<br>
+
+<input name="trait" onchange="return Onchange();"><br>
+
+Gender:<br>
+
+<input name="gender" onchange="return Onchange();">
+<br>
+<br>
+<ul>
+
+<div id="result"></div>
+
+
+</ul>
+
+
+<br>
+
+<a href="/">Connection center</a>
+
+
+
+</form>
+
+
+
+
+
+
+<script>
+
+ function Onchange(){
+
+
+var species = $("input[name='species']").val();
+var trait = $("input[name='trait']").val();
+var gender = $("input[name='gender']").val();
+
+
+var query = '?';
+
+if(species != "") query += 'species=' + species + '&';
+if(trait != "") query += 'trait=' + trait + '&';
+if(gender !="") query += 'gender=' + gender + '&';
+
+var url = 'http://localhost:3000/findAnimals/' + query;
+
+
+$.getJSON(url,(animals,status)=>{
+
+var result = $("#result");
+
+result.html('');
+
+animals.forEach((animal) => {
+
+result.append('<li>' + 'Name:' + '  ' + animal.name + ',' + '<br>');
+result.append('Species:' + '  ' + animal.species + ',' + '<br>');
+result.append('Breed:' + '  ' + animal.breed + ',' + '<br>');
+result.append('Gender:' + '  ' + animal.gender + ',' + '<br>');
+result.append('Age:' + '  ' + animal.age + '</li>' + '<br>' + '<br>');
+
+
+    
+    
+});
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+ }
+
+
+ function agelessthan(){
+
+var age = $("input[name='age']").val();
+
+var query = '?'
+
+if(age != "") query += 'age=' + age + '&';
+
+var url = 'http://localhost:3000/animalsYoungerThan/' + query;
+
+
+$.getJSON(url, (name, status) =>{
+
+var result = $("#result");
+result.html('');
+
+
+name.forEach((animal, status) =>{
+
+    result.append('<li>' + 'Count:' + '  ' + animal.count + ',');
+
+  animal.names.forEach((animals) =>{
+
+
+if(animals.name) result.append(animals.name + ',');
+
+
+result.append('</li>')
+
+  });
+
+
+
+});
+
+
+ 
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+ }
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+
+</html>

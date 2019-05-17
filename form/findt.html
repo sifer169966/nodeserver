@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/jquery.js"></script>
+
+       <script type="text/javascript">
+       $(document).ready(()=>{
+           alert("document.ready");
+        });
+        </script>
+    </head>
+
+    <body>
+
+        <h1>FIND TOY PAGE</h1>
+
+        <form>
+            
+            ID-TOY:<br> <input name="id">
+            <p>
+            NAME-TOY:<br> <input name="name">
+            <p>
+            PRICE-TOY:<br> <input name="price">
+                <br>
+          
+
+        </form>
+        <br>
+        <a href="/formaddtoy">Add Toy</a><br><br>
+        <a href="/">Connection center</a>
+        
+        <br>
+        <br>
+        <br>
+
+        <ul>
+            <div id='result'></div> 
+
+        </ul>
+
+
+
+
+    <script>
+    $("input").on( "change input textInput", () =>{
+        var id = $("input[name='id']").val();
+        var name = $("input[name='name']").val();
+        var price = $("input[name='price']").val();
+        var query = '?';
+        if(id != "") query += 'id=' + id + '&';
+        if(name !="") query += 'name=' + name +'&';
+        if(price !="") query += 'price=' + price + '&';
+        var url = 'http://localhost:3000/findToy/' + query;
+        console.log(url);
+        $.getJSON(url, (toys, status) =>{
+            var result = $("#result");
+            result.html('');
+            console.log(toys)
+            if(Object.keys(toys).length == "") result.append('<li>' + 'ไม่พบข้อมูล' + '</li>');
+            else {
+                toys.forEach( (toy) => {
+                    result.append('<li><i>' + 'ID:' + ' ' + ' ' + toy.id + '</i>,');
+                        result.append('Name:' + '  ' + toy.name + ',' + '<br>');
+                        result.append('Price:' + '  ' + toy.price + '</li>'); 
+                    });
+                }
+            });
+        });
+    </script>
+    </body>
+</html>
